@@ -22,6 +22,7 @@ routas.post(
   AuthenticationController.authenticate
 );
 routas.use(AuthenticationMiddleware);
+
 routas.get("/", (req, res) => {
   return res.send({ message: "Connecteda com sucesso" });
 });
@@ -34,5 +35,7 @@ routas.post("/upload", upload.single("image"), FileController.upload);
 routas.post("/posts", shemaValidator(postSchema), PostController.create);
 routas.delete("/posts/:id", PostController.delete);
 routas.put("/posts/:id", PostController.update);
+
+routas.put("/add-like/:id", PostController.addLike);
 
 module.exports = routas;

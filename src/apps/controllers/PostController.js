@@ -1,6 +1,7 @@
 const Posts = require("../models/posts");
 
 class PostController {
+  //criar post
   async create(req, res) {
     const { image, description } = req.body;
 
@@ -16,7 +17,7 @@ class PostController {
 
     return res.status(200).json({ data: { image, description } });
   }
-
+  // deletar post
   async delete(req, res) {
     const { id } = req.params;
 
@@ -48,7 +49,7 @@ class PostController {
 
     return res.status(200).json({ message: "Post deletado" });
   }
-
+  // Atualizar post
   async update(req, res) {
     const { id } = req.params;
     const { image, description } = req.body;
@@ -76,6 +77,35 @@ class PostController {
     }
 
     return res.status(200).json({ message: "Posts Atualizado" });
+  }
+  // likes
+
+  async addLike(req, res) {
+    const { id } = req.params;
+
+    const verifyPost = await Posts.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!verifyPost) {
+      return res.status(401).json({ message: "Post não existe!" });
+    }
+
+    const postUpdate = await Posts.update(
+      { number_likes: verifyPost.number_likes + 1 },
+      { where: { id } }
+    );
+
+    if (!postUpdate) {
+      return res.status(400).json({ message: "Falha na atualização do post!" });
+    }
+
+    return res.status(200).json({
+      message: "Like foi amarzenado ",
+      number_likes: postUpdate.number_likes,
+    });
   }
 }
 
