@@ -48,6 +48,35 @@ class PostController {
 
     return res.status(200).json({ message: "Post deletado" });
   }
+
+  async update(req, res) {
+    const { id } = req.params;
+    const { image, description } = req.body;
+
+    const verifyPost = await Posts.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!verifyPost) {
+      return res.status(401).json({ message: "Post não exists" });
+    }
+
+    if (verifyPost.author_id !== parseInt(req.userId)) {
+      return res
+        .status(401)
+        .json({ message: "Você não tem permisão para deletar post" });
+    }
+
+    const postUpdate = await Posts.update(req.body, { where: { id } });
+
+    if (!postUpdate) {
+      return res.status(400).json({ message: "Falha na atualização do post!" });
+    }
+
+    return res.status(200).json({ message: "Posts Atualizado" });
+  }
 }
 
 module.exports = new PostController();

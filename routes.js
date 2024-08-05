@@ -32,6 +32,7 @@ routas.get("/user-profile", userControler.userProfile);
 routas.post("/upload", upload.single("image"), FileController.upload);
 
 routas.post("/posts", shemaValidator(postSchema), PostController.create);
-routas.delete("/delete-posts/:id", PostController.delete);
+routas.delete("/posts/:id", PostController.delete);
+routas.put("/posts/:id", PostController.update);
 
 module.exports = routas;
