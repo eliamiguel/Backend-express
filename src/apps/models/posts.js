@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-
 const { Model } = require("sequelize");
 
 class Posts extends Model {
@@ -20,7 +19,7 @@ class Posts extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Users, { foreignkey: "author_id", as: "user" });
+    this.belongsTo(models.Users, { foreignKey: "author_id", as: "user" });
   }
 }
 

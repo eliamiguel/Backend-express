@@ -1,4 +1,5 @@
 const Posts = require("../models/posts");
+const Users = require("../models/Users");
 
 class PostController {
   //criar post
@@ -116,7 +117,7 @@ class PostController {
     });
 
     if (!allPosts) {
-      return res.status(400).json();
+      return res.status(400).json({ message: "Falha para listar os posts" });
     }
     const formataData = [];
 
@@ -132,6 +133,23 @@ class PostController {
       data: formataData,
     });
   }
+  async listAllPosts(req, res) {
+    const allPosts = await Posts.findAll({
+      attributes: ["id", "description", "image", "number_likes"],
+      include: [
+        {
+          model: Users,
+          as: "user",
+          required: true,
+          attributes: ["id", "user_name"],
+        },
+      ],
+    });
+
+    return res.status(200).json({
+      data: allPosts,
+    });
+  }
 }
 
-module.exports = new PostController({ message: "Falha para listar os posts" });
+module.exports = new PostController();

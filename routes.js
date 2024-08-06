@@ -39,5 +39,6 @@ routas.put("/posts/:id", PostController.update);
 routas.put("/add-like/:id", PostController.addLike);
 
 routas.get("/list-my-posts", PostController.listMyPosts);
+routas.get("/all-posts", PostController.listAllPosts);
 
 module.exports = routas;
