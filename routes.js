@@ -11,7 +11,7 @@ const authSchema = require("./src/schema/auth.schema.json");
 
 const userControler = require("./src/apps/controllers/UserControler");
 const userSchema = require("./src/schema/create.user.schema.json");
-const FileController = require("./src/apps/middlewares/FileController");
+const FileController = require("./src/apps/controllers/FileController");
 const PostController = require("./src/apps/controllers/PostController");
 const postSchema = require("./src/schema/post.schema.json");
 routas.post("/user", shemaValidator(userSchema), userControler.create);
@@ -36,9 +36,9 @@ routas.post("/posts", shemaValidator(postSchema), PostController.create);
 routas.delete("/posts/:id", PostController.delete);
 routas.put("/posts/:id", PostController.update);
 
-routas.put("/add-like/:id", PostController.addLike);
+routas.put("/posts/add-like/:id", PostController.addLike);
 
-routas.get("/list-my-posts", PostController.listMyPosts);
-routas.get("/all-posts", PostController.listAllPosts);
+routas.get("/posts/my-posts", PostController.listMyPosts);
+routas.get("/posts/all-posts", PostController.listAllPosts);
 
 module.exports = routas;
